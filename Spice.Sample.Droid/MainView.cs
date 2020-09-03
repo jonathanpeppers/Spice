@@ -1,12 +1,16 @@
 using Android.Content;
+using Android.Opengl;
 using SkiaSharp;
 using SkiaSharp.Views.Android;
 
 namespace Spice.Sample.Droid
 {
-	class MainView : SKGLSurfaceView
+	class MainView : SKGLTextureView
 	{
-		public MainView (Context c) : base (c) { }
+		public MainView (Context c) : base (c)
+		{
+			RenderMode = Rendermode.WhenDirty;
+		}
 
 		protected override void OnPaintSurface (SKPaintGLSurfaceEventArgs e)
 		{
