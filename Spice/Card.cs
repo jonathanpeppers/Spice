@@ -4,29 +4,27 @@ namespace Spice
 {
 	public static class Card
 	{
-		const float blur = 32;
+		const float offset = 12;
+		const float blur = 16;
 		static readonly SKSize rounded = new SKSize (32f, 32f);
-		static readonly SKImageFilter lightShadow = SKImageFilter.CreateDropShadow (-12, -12, blur, blur, Colors.DarkShadow);
-		static readonly SKImageFilter darkShadow  = SKImageFilter.CreateDropShadow (12, 12, blur, blur, Colors.DarkShadow);
-		//static readonly SKImageFilter shadow = SKImageFilter.CreateCompose (lightShadow, darkShadow);
+		static readonly SKImageFilter blurEffect = SKImageFilter.CreateBlur (blur, blur);
+		static readonly SKPaint paint = new SKPaint { IsAntialias = true };
 
 		public static void Draw (SKCanvas canvas, SKRect rect)
 		{
-			using (var paint = new SKPaint ()) {
-				paint.IsAntialias = true;
+			// Draw light shadow
+			paint.Color = Colors.LightShadow;
+			paint.ImageFilter = blurEffect;
+			canvas.DrawRoundRect (new SKRect (rect.Left - offset, rect.Top - offset, rect.Right - offset, rect.Bottom - offset), rounded, paint);
 
-				// Draw filled shape
-				paint.Color = Colors.ShapeBackground;
-				paint.ImageFilter = lightShadow;
-				canvas.DrawRoundRect (rect, rounded, paint);
+			// Draw dark shadow
+			paint.Color = Colors.DarkShadow;
+			canvas.DrawRoundRect (new SKRect (rect.Left + offset, rect.Top + offset, rect.Right + offset, rect.Bottom + offset), rounded, paint);
 
-				// Draw lined border
-				paint.StrokeWidth = 1;
-				paint.Style = SKPaintStyle.Stroke;
-				paint.Color = Colors.Border;
-				paint.ImageFilter = darkShadow;
-				canvas.DrawRoundRect (rect, rounded, paint);
-			}
+			// Draw filled shape
+			paint.Color = Colors.ShapeBackground;
+			paint.ImageFilter = null;
+			canvas.DrawRoundRect (rect, rounded, paint);
 		}
 	}
 }
