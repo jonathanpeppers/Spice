@@ -15,16 +15,27 @@ namespace Spice
 			// Draw light shadow
 			paint.Color = Colors.LightShadow;
 			paint.ImageFilter = blurEffect;
-			canvas.DrawRoundRect (new SKRect (rect.Left - offset, rect.Top - offset, rect.Right - offset, rect.Bottom - offset), rounded, paint);
+			canvas.Translate (-offset, -offset);
+			canvas.DrawRoundRect (rect, rounded, paint);
 
 			// Draw dark shadow
 			paint.Color = Colors.DarkShadow;
-			canvas.DrawRoundRect (new SKRect (rect.Left + offset, rect.Top + offset, rect.Right + offset, rect.Bottom + offset), rounded, paint);
+			canvas.Translate (offset * 2, offset * 2);
+			canvas.DrawRoundRect (rect, rounded, paint);
 
 			// Draw filled shape
+			canvas.Translate (-offset, -offset);
 			paint.Color = Colors.ShapeBackground;
 			paint.ImageFilter = null;
 			canvas.DrawRoundRect (rect, rounded, paint);
+
+			// Translate to center a 100x150 heart SVG
+			canvas.Translate (rect.Left + (rect.Width - 100) / 2f, rect.Top + (rect.Height - 150) / 2f);
+			paint.Color = SKColors.SlateGray;
+			paint.ImageFilter = blurEffect;
+			canvas.DrawPath (Svgs.Heart, paint);
+			paint.ImageFilter = null;
+			canvas.DrawPath (Svgs.Heart, paint);
 		}
 	}
 }
