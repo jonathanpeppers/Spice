@@ -13,6 +13,7 @@ namespace Spice
 		public static void Draw (SKCanvas canvas, SKRect rect)
 		{
 			// Draw light shadow
+			paint.Style = SKPaintStyle.Fill;
 			paint.Color = Colors.LightShadow;
 			paint.ImageFilter = blurEffect;
 			canvas.Translate (-offset, -offset);
@@ -29,11 +30,20 @@ namespace Spice
 			paint.ImageFilter = null;
 			canvas.DrawRoundRect (rect, rounded, paint);
 
-			// Translate to center a 100x150 heart SVG
-			canvas.Translate (rect.Left + (rect.Width - 100) / 2f, rect.Top + (rect.Height - 150) / 2f);
-			paint.Color = SKColors.SlateGray;
+			// Translate to center a (90, 112.5) heart SVG
+			canvas.Translate (rect.Left + (rect.Width - 90) / 2f, rect.Top + (rect.Height - 112.5f) / 2f);
+
+			// Draw heart shadow
+			canvas.Translate (offset, offset);
+			paint.Color = SKColors.Magenta.WithAlpha (0x33);
 			paint.ImageFilter = blurEffect;
 			canvas.DrawPath (Svgs.Heart, paint);
+
+			// Draw heart
+			canvas.Translate (-offset, -offset);
+			paint.Color = SKColors.Magenta;
+			paint.Style = SKPaintStyle.Stroke;
+			paint.StrokeWidth = 10;
 			paint.ImageFilter = null;
 			canvas.DrawPath (Svgs.Heart, paint);
 		}
