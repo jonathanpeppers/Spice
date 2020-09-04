@@ -1,3 +1,4 @@
+#nullable enable
 using Android.Content;
 using Android.Opengl;
 using SkiaSharp;
@@ -5,21 +6,29 @@ using SkiaSharp.Views.Android;
 
 namespace Spice.Sample.Droid
 {
-	class CardView : SKGLTextureView
+	class IconView : SKGLTextureView
 	{
-		public CardView (Context c) : base (c)
+		public IconView (Context c) : base (c)
 		{
 			RenderMode = Rendermode.WhenDirty;
+		}
+
+		SKPath? path;
+
+		public SKPath? Path {
+			get => path;
+			set { Invalidate (); path = value; }
 		}
 
 		protected override void OnPaintSurface (SKPaintGLSurfaceEventArgs e)
 		{
 			base.OnPaintSurface (e);
 
-			float spacing = 50;
 			var canvas = e.Surface.Canvas;
 			canvas.Clear (Colors.MainBackground);
-			Card.Draw (canvas, new SKRect (spacing, spacing, Width - spacing, Height - spacing));
+			if (path != null) {
+				Icon.Draw (canvas, new SKRect (0, 0, Width, Height), path);
+			}
 		}
 	}
 }

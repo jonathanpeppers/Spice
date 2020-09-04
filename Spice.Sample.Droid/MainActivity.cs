@@ -20,10 +20,17 @@ namespace Spice.Sample.Droid
 
 			var layout = FindViewById<RelativeLayout> (Resource.Id.cardLayout);
 			if (layout != null) {
-				layout.AddView (new CardView (this));
 				if (layout.Parent is RelativeLayout parent) {
 					parent.Background = new ColorDrawable (ToColor (Colors.MainBackground));
 				}
+
+				layout.AddView (new CardView (this));
+
+				var heart = new IconView (this) { Path = Svgs.Heart };
+				var @params = new RelativeLayout.LayoutParams (150, 150);
+				@params.AddRule (LayoutRules.CenterInParent);
+				heart.LayoutParameters = @params;
+				layout.AddView (heart);
 			}
 		}
 

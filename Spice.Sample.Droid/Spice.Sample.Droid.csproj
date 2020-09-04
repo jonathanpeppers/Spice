@@ -64,6 +64,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IconView.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="CardView.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
