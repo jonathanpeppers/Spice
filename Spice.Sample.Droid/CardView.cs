@@ -5,10 +5,11 @@ using SkiaSharp.Views.Android;
 
 namespace Spice.Sample.Droid
 {
-	class MainView : SKGLTextureView
+	class CardView : SKGLTextureView
 	{
-		public MainView (Context c) : base (c)
+		public CardView (Context c) : base (c)
 		{
+			ClipToOutline = false;
 			RenderMode = Rendermode.WhenDirty;
 		}
 
@@ -16,7 +17,7 @@ namespace Spice.Sample.Droid
 		{
 			base.OnPaintSurface (e);
 
-			float spacing = Width / 5;
+			float spacing = 50;
 			var canvas = e.Surface.Canvas;
 			canvas.Clear (Colors.MainBackground);
 			Card.Draw (canvas, new SKRect (spacing, spacing, Width - spacing, Height - spacing));
